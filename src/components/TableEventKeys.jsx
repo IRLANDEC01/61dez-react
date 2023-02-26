@@ -2,7 +2,7 @@ import React from 'react'
 import { Col, Row, Table } from 'react-bootstrap'
 import EventKeysList from './EventKeysList'
 
-const TableEventKeys = ({ eventKeys }) => {
+const TableEventKeys = ({eventKeys, deleteEventKey,passEventKey}) => {
     return (
         <Row>
             <Col>
@@ -17,7 +17,11 @@ const TableEventKeys = ({ eventKeys }) => {
                             <th>Время сдачи</th>
                         </tr>
                     </thead>
-                    <EventKeysList eventKeys={eventKeys}></EventKeysList>
+                    <EventKeysList 
+                    eventKeys={eventKeys}
+                    deleteEventKey={deleteEventKey}
+                    passEventKey={passEventKey}
+                    ></EventKeysList>
                 </Table>
             </Col>
         </Row>

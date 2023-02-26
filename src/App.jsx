@@ -40,6 +40,14 @@ const auds = [
   }
 ]
 
+const cadetCourses=[2,3,4,5]
+const cadetGroups=[
+  {
+    name:611/11,
+    course:2
+  },
+  
+]
 
 export const App = () => {
   const [audList, setAudList] = useState(auds)

@@ -4,23 +4,18 @@ import { AudListContext } from '../context'
 
 const FormCreateEventKey = ({ showFormModal, setShowFormModal, create }) => {
     const [eventKey, setEventKey] = useState({ aud: '', course: '', group: '' })
-    const [formBtn, setFormBtn] = useState('true')
     const { audList } = useContext(AudListContext)
 
-    const select = (e) => {
-        console.log(e.target.value);
-        setEventKey({ ...eventKey, aud: e.target.value })
-    }
+
     const addNewEventKey = (e) => {
         e.preventDefault()
-        console.log(e);
         const newEventKey = {
             ...eventKey,
             id: Date.now(),
             timeToTakeKey: new Date(Date.now()).toLocaleString().split(',')[1],
+            timeToPassKey: null,
             isUsed: true
         }
-        setShowFormModal(false)
         setEventKey({ aud: '', course: '', group: '' })
         create(newEventKey)
     }
@@ -35,13 +30,15 @@ const FormCreateEventKey = ({ showFormModal, setShowFormModal, create }) => {
                         <Modal.Body>
                             <Row>
                                 <Col>
+                                    <Form.Group className="mb-3" controlId="formGroupEmail">
 
-                                    <Form.Select aria-label="Default select example"
-                                        onChange={select}
-                                    >
-                                        <option >Аудитория</option>
-                                        {audList.map((aud) => <option key={aud.name} value={aud.name}>{aud.name+' '+aud.notation}</option>)}
-                                    </Form.Select>
+                                        <Form.Select aria-label="Default select example"
+                                            onChange={e => setEventKey({ ...eventKey, aud: e.target.value })}
+                                        >
+                                            <option  >Аудитория</option>
+                                            {audList.map((aud) => <option key={aud.name} value={aud.name}>{aud.name + ' ' + aud.notation}</option>)}
+                                        </Form.Select>
+                                    </Form.Group>
                                 </Col>
                                 <Col>
 
@@ -70,7 +67,6 @@ const FormCreateEventKey = ({ showFormModal, setShowFormModal, create }) => {
                         <Modal.Footer>
                             <Button variant="primary"
                                 type="submit"
-                                disabled={formBtn}
                             >
                                 Создать запись
                             </Button>

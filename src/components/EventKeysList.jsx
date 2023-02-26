@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import EventKey from './EventKey'
 
-const EventKeysList = ({ eventKeys }) => {
+const EventKeysList = ({ eventKeys,deleteEventKey, passEventKey }) => {
   return (
     <tbody>
       {eventKeys.map((event, index) =>
@@ -9,6 +9,8 @@ const EventKeysList = ({ eventKeys }) => {
           key={event.id}
           eventKey={event}
           number={index + 1}
+          deleteEventKey={deleteEventKey}
+          passEventKey={passEventKey}
         >
         </EventKey>
       )
