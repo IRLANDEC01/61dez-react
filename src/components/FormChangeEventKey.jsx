@@ -1,39 +1,35 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import { Button, Col, Form, Modal, Row } from 'react-bootstrap'
 import { AudListContext } from '../context'
 
-const FormCreateEventKey = ({ showFormCreateModal, setShowFormCreateModal, create }) => {
-    const [eventKey, setEventKey] = useState({ aud: '', course: '', group: '' })
+const FormChangeEventKey = ({ showFormChangeModal, setShowFormChangeModal, changeableEventKey,setChangeableEventKey, change }) => {
     const { audList } = useContext(AudListContext)
 
-
-    const addNewEventKey = (e) => {
+    const changeEventKey = (e) => {
         e.preventDefault()
-        const newEventKey = {
-            ...eventKey,
-            id: Date.now(),
+        const updateEventKey = {
+            ...changeableEventKey,
             timeToTakeKey: new Date(Date.now()).toLocaleString().split(',')[1],
             timeToPassKey: null,
             isUsed: true
         }
-        setEventKey({ aud: '', course: '', group: '' })
-        create(newEventKey)
+        change(updateEventKey)
     }
     return (
         <Row>
             <Col>
-                <Modal show={showFormCreateModal} onHide={() => setShowFormCreateModal(false)}>
+                <Modal show={showFormChangeModal} onHide={() => setShowFormChangeModal(false)}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Заполните форму</Modal.Title>
+                        <Modal.Title>Изменить запись</Modal.Title>
                     </Modal.Header>
-                    <Form onSubmit={addNewEventKey}>
+                    <Form onSubmit={changeEventKey}>
                         <Modal.Body>
                             <Row>
                                 <Col>
                                     <Form.Group className="mb-3" controlId="formGroupEmail">
-
                                         <Form.Select aria-label="Default select example"
-                                            onChange={e => setEventKey({ ...eventKey, aud: e.target.value })}
+                                        defaultValue={'11111'}
+                                        onChange={e => setChangeableEventKey({ ...changeableEventKey, aud: e.target.value })}
                                         >
                                             <option  >Аудитория</option>
                                             {audList.map((aud) => <option key={aud.name} value={aud.name}>{aud.name + ' ' + aud.notation}</option>)}
@@ -43,7 +39,7 @@ const FormCreateEventKey = ({ showFormCreateModal, setShowFormCreateModal, creat
                                 <Col>
 
                                     <Form.Select aria-label="Default select example"
-                                        onChange={e => setEventKey({ ...eventKey, course: e.target.value })}
+                                     onChange={e => setChangeableEventKey({ ...changeableEventKey, course: e.target.value })}
                                     >
                                         <option >Курс</option>
                                         <option value="2">2</option>
@@ -54,7 +50,7 @@ const FormCreateEventKey = ({ showFormCreateModal, setShowFormCreateModal, creat
                                 </Col>
                                 <Col>
                                     <Form.Select aria-label="Default select example"
-                                        onChange={e => setEventKey({ ...eventKey, group: e.target.value })}
+                                        onChange={e => setChangeableEventKey({ ...changeableEventKey, group: e.target.value })}
                                     >
                                         <option>Группа</option>
                                         <option value="62/12">662/12</option>
@@ -68,7 +64,7 @@ const FormCreateEventKey = ({ showFormCreateModal, setShowFormCreateModal, creat
                             <Button variant="primary"
                                 type="submit"
                             >
-                                Создать запись
+                                Изменить
                             </Button>
                         </Modal.Footer>
                     </Form>
@@ -78,4 +74,4 @@ const FormCreateEventKey = ({ showFormCreateModal, setShowFormCreateModal, creat
     )
 }
 
-export default FormCreateEventKey
+export default FormChangeEventKey

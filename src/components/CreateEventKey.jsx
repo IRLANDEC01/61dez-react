@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Card, Col, Row } from 'react-bootstrap'
 
-const CreateEventKey = ({setShowFormModal}) => {
+const CreateEventKey = ({setShowFormCreateModal}) => {
     return (
         <Row className='justify-content-md-center'>
             <Col lg={4}>
@@ -11,7 +11,7 @@ const CreateEventKey = ({setShowFormModal}) => {
 
                         <Button
                             variant="primary" 
-                            onClick={() => setShowFormModal(true)}
+                            onClick={() => setShowFormCreateModal(true)}
                         >
                             Создать запись
                         </Button>

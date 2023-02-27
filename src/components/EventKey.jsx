@@ -1,7 +1,8 @@
 import React from 'react'
 import { Badge, Button } from 'react-bootstrap'
 
-const EventKey = ({ eventKey, number, deleteEventKey, passEventKey }) => {
+const EventKey = ({ eventKey, number, deleteEventKey, passEventKey, openChangeModal }) => {
+
   return (
     <tr>
       <td>{number}</td>
@@ -21,6 +22,7 @@ const EventKey = ({ eventKey, number, deleteEventKey, passEventKey }) => {
         <td>
           <Button
             variant="primary"
+            onClick={() => openChangeModal(eventKey)}
           >Изменить
           </Button>
           <Button
@@ -32,7 +34,8 @@ const EventKey = ({ eventKey, number, deleteEventKey, passEventKey }) => {
             onClick={() => passEventKey(eventKey)}
           >
             Сдать аудиторию</Button>
-        </td> : ''
+        </td> :
+        <td></td>
       }
     </tr>
   )

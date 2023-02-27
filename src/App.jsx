@@ -1,6 +1,5 @@
-import React, { createContext, useContext, useState } from "react";
-import { Col, Container, Row } from "react-bootstrap";
-import { BrowserRouter } from "react-router-dom";
+import React, { useState } from "react";
+import { Container } from "react-bootstrap";
 import NavBar from "./components/UI/NavBar";
 import { AudListContext } from "./context";
 import Dez from "./Dez";
@@ -44,6 +43,14 @@ const cadetCourses=[2,3,4,5]
 const cadetGroups=[
   {
     name:611/11,
+    course:2
+  },
+   {
+    name:611/12,
+    course:2
+  },
+   {
+    name:611/12,
     course:2
   },
   

@@ -1,20 +1,37 @@
 import React, { useState } from 'react'
 import CreateEventKey from './components/CreateEventKey'
+import FormChangeEventKey from './components/FormChangeEventKey'
 import FormCreateEventKey from './components/FormCreateEventKey'
 import TableEventKeys from './components/TableEventKeys'
 
 const Dez = () => {
 
-  const [showFormModal, setShowFormModal] = useState(false)
+  const [showFormCreateModal, setShowFormCreateModal] = useState(false)
+  const [showFormChangeModal, setShowFormChangeModal] = useState(false)
+  const [changeableEventKey, setChangeableEventKey] = useState(false)
   const [eventKeys, setEventKeys] = useState([])
 
   const createEventKey = (newEventKey) => {
     setEventKeys([...eventKeys, newEventKey])
-    setShowFormModal(false)
+    setShowFormCreateModal(false)
   }
   const deleteEventKey = (eventKey) => {
     setEventKeys([...eventKeys.filter((a) => a.id !== eventKey.id)])
   }
+
+  const openChangeModal = (eventKey) => {
+    setShowFormChangeModal(true)
+    setChangeableEventKey(eventKey)
+  }
+
+  const changeEventKey = (eventKey) => {
+    setShowFormChangeModal(false)
+    setEventKeys([...eventKeys.map((item) => {
+      if (item.id === eventKey.id) return eventKey;
+      return item
+    })])
+  }
+
   const passEventKey = (eventKey) => {
     setEventKeys([...eventKeys.map((item) => {
       if (item.id === eventKey.id) {
@@ -33,15 +50,24 @@ const Dez = () => {
         eventKeys={eventKeys}
         deleteEventKey={deleteEventKey}
         passEventKey={passEventKey}
+        openChangeModal={openChangeModal}
       ></TableEventKeys>
       <CreateEventKey
-        setShowFormModal={setShowFormModal}
+        setShowFormCreateModal={setShowFormCreateModal}
       ></CreateEventKey>
       <FormCreateEventKey
-        showFormModal={showFormModal}
-        setShowFormModal={setShowFormModal}
+        setShowFormCreateModal={setShowFormCreateModal}
+        showFormCreateModal={showFormCreateModal}
         create={createEventKey}
       ></FormCreateEventKey>
+      <FormChangeEventKey
+        changeableEventKey={changeableEventKey}
+        setChangeableEventKey={setChangeableEventKey}
+        showFormChangeModal={showFormChangeModal}
+        setShowFormChangeModal={setShowFormChangeModal}
+        change={changeEventKey}
+      >
+      </FormChangeEventKey>
     </div>
   )
 }
