@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Container } from "react-bootstrap";
+import { BrowserRouter } from "react-router-dom";
+import AppRouter from "./components/AppRouter";
 import NavBar from "./components/UI/NavBar";
 import { AudListContext } from "./context";
-import Dez from "./Dez";
 
 const auds = [
   {
@@ -39,21 +40,21 @@ const auds = [
   }
 ]
 
-const cadetCourses=[2,3,4,5]
-const cadetGroups=[
+const cadetCourses = [2, 3, 4, 5]
+const cadetGroups = [
   {
-    name:611/11,
-    course:2
+    name: 611 / 11,
+    course: 2
   },
-   {
-    name:611/12,
-    course:2
+  { 
+    name: 611 / 12,
+    course: 2
   },
-   {
-    name:611/12,
-    course:2
+  {
+    name: 611 / 12,
+    course: 2
   },
-  
+
 ]
 
 export const App = () => {
@@ -64,8 +65,10 @@ export const App = () => {
         audList,
         setAudList
       }} >
-        <NavBar></NavBar>
-        <Dez></Dez>
+        <BrowserRouter>
+          <NavBar></NavBar>
+          <AppRouter />
+        </BrowserRouter>
       </AudListContext.Provider>
     </Container>
   );
