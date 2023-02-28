@@ -3,6 +3,7 @@ import CreateEventKey from '../components/CreateEventKey'
 import FormChangeEventKey from '../components/FormChangeEventKey'
 import FormCreateEventKey from '../components/FormCreateEventKey'
 import TableEventKeys from '../components/TableEventKeys'
+import DezNavBar from '../components/UI/DezNavBar'
 
 const Dez = () => {
 

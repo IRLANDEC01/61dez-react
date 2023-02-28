@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { Redirect, Route, Routes } from "react-router-dom";
-import Dez from '../pages/Dez.jsx';
 import { publicRoutes } from "../router/router.jsx";
 
 const AppRouter = () => {
@@ -9,7 +8,7 @@ const AppRouter = () => {
         <Routes>
             {publicRoutes.map(route =>
                 <Route
-                    element={route.element}
+                    element={<route.element/>}
                     path={route.path}
                     exact={route.exact}
                     key={route.path}

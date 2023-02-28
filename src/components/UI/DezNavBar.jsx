@@ -1,14 +1,16 @@
 import React from 'react'
-import { Col, Container, Nav, Navbar, Row } from 'react-bootstrap'
+import { Col, Nav, Navbar, NavLink, Row } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
-const NavBar = () => {
+const DezNavBar = () => {
     return (
         <Row>
             <Col>
                 <Navbar bg="light" expand="lg">
                     <Nav className="me-auto">
-                        <Link to="/dez">О сайте</Link>
+                        <NavLink as={Link} to="/admin">
+                            Дежурный по кафедре:
+                        </NavLink>
                     </Nav>
                 </Navbar>
             </Col>
@@ -16,4 +18,4 @@ const NavBar = () => {
     )
 }
 
-export default NavBar
+export default DezNavBar
