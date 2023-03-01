@@ -1,5 +1,8 @@
 import Admin from "../pages/Admin.jsx";
+import Aud from "../pages/Aud.jsx";
 import Dez from "../pages/Dez.jsx";
+import Groups from "../pages/Groups.jsx";
+import History from "../pages/History.jsx";
 
 
 // export const privateRoutes = [
@@ -9,4 +12,7 @@ import Dez from "../pages/Dez.jsx";
 export const publicRoutes = [
     {path: '/dez', element: Dez, exact: true},
     {path: '/admin', element: Admin, exact: true},
+    {path: '/aud', element: Aud, exact: true},
+    {path: '/groups', element: Groups, exact: true},
+    {path: '/history', element: History, exact: true},
 ]

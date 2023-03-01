@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Container } from "react-bootstrap";
 import { BrowserRouter } from "react-router-dom";
 import AppRouter from "./components/AppRouter";
-import DezNavBar from "./components/UI/DezNavBar";
+import NavBar from "./components/UI/NavBar";
+
 import { AudListContext } from "./context";
 
 const auds = [
@@ -66,7 +67,8 @@ export const App = () => {
         setAudList
       }} >
         <BrowserRouter>
-          <DezNavBar></DezNavBar>
+
+          <NavBar></NavBar>
           <AppRouter />
         </BrowserRouter>
       </AudListContext.Provider>
