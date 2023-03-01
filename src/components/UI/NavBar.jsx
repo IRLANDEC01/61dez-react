@@ -8,7 +8,6 @@ const NavigationBar = () => {
             <Col>
                 <Navbar bg="light" expand="lg">
                         <NavigationLink></NavigationLink>
-                   
                 </Navbar>
             </Col>
         </Row>

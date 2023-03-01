@@ -31,21 +31,23 @@ const FormCreateEventKey = ({ showFormCreateModal, setShowFormCreateModal, creat
                             <Row>
                                 <Col>
                                     <Form.Group className="mb-3" controlId="formGroupEmail">
-
+                                        <Form.Label>Аудитория</Form.Label>
                                         <Form.Select aria-label="Default select example"
                                             onChange={e => setEventKey({ ...eventKey, aud: e.target.value })}
                                         >
-                                            <option  >Аудитория</option>
+                                            <option> Не выбрано</option>
                                             {audList.map((aud) => <option key={aud.name} value={aud.name}>{aud.name + ' ' + aud.notation}</option>)}
                                         </Form.Select>
                                     </Form.Group>
                                 </Col>
+                            </Row>
+                            <Row>
                                 <Col>
-
+                                    <Form.Label>Курс</Form.Label>
                                     <Form.Select aria-label="Default select example"
                                         onChange={e => setEventKey({ ...eventKey, course: e.target.value })}
                                     >
-                                        <option >Курс</option>
+                                        <option> Не выбрано</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>
                                         <option value="4">4</option>
@@ -53,10 +55,12 @@ const FormCreateEventKey = ({ showFormCreateModal, setShowFormCreateModal, creat
                                     </Form.Select>
                                 </Col>
                                 <Col>
+                                    <Form.Label>Группа</Form.Label>
+
                                     <Form.Select aria-label="Default select example"
                                         onChange={e => setEventKey({ ...eventKey, group: e.target.value })}
                                     >
-                                        <option>Группа</option>
+                                        <option> Не выбрано</option>
                                         <option value="62/12">662/12</option>
                                         <option value="661/11">661/11</option>
                                         <option value="6444/1">6444/1</option>

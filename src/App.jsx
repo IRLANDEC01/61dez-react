@@ -37,7 +37,7 @@ const auds = [
   },
   {
     name: 314,
-    notation: '(Буфет)'
+    notation: 'Буфет'
   }
 ]
 

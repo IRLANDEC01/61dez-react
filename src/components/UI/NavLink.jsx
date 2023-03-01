@@ -3,13 +3,13 @@ import { Nav, NavLink } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
 const NavigationLink = () => {
-    const [isAIminPageContext, setIsAdminPageContext] = useState(true)
+    const [isAIminPage, setIsAdminPage] = useState(true)
     return (
-        isAIminPageContext
+        isAIminPage
             ?
             <Nav className="me-auto">
                 <NavLink as={Link} to="/admin"
-                    onClick={() => setIsAdminPageContext(false)}
+                    onClick={() => setIsAdminPage(false)}
                 >
                     Дежурный по кафедре:
                 </NavLink>
@@ -17,7 +17,7 @@ const NavigationLink = () => {
             :
             <Nav className="me-auto">
                 <NavLink as={Link} to="/dez"
-                    onClick={() => setIsAdminPageContext(true)}
+                    onClick={() => setIsAdminPage(true)}
                 >
                     Выдача ключей
                 </NavLink>
