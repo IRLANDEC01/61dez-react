@@ -15,6 +15,7 @@ const TableEventKeys = ({ eventKeys, deleteEventKey, passEventKey,openChangeModa
                             <th>Группа</th>
                             <th>Время вскрытия</th>
                             <th>Время сдачи</th>
+                            <th>Действие</th>
                         </tr>
                     </thead>
                     <EventKeysList

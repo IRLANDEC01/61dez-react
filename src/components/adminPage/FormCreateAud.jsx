@@ -1,31 +1,16 @@
+import { Formik, useFormik } from 'formik'
 import React, { useContext, useState } from 'react'
 import { Button, Card, Col, Form, InputGroup, Modal, Row } from 'react-bootstrap'
 import { AudListContext } from '../../context'
 
 const FormCreateAud = () => {
-    const [newAud, setNewAud] = useState({ name: '', notation: '' })
     const [showFormCreateAudModal, setShowFormCreateAudModa] = useState(false)
     const { audList, setAudList } = useContext(AudListContext)
 
-    const [validated, setValidated] = useState(false);
-
-    const addNewAud = (e) => {
-        e.preventDefault()
-        const isAudExists = audList.forEach(aud => {
-            if (aud.name === newAud.name) return true
-        });
-        if (!e.currentTarget.checkValidity() || isAudExists) {
-            setAudList([...audList, newAud])
-        }
-        setValidated(true);
-        // setShowFormCreateAudModa(false)
-    }
     return (
         <div>
-
             <Row className='justify-content-md-center'>
                 <Col>
-
                     <Button onClick={() => setShowFormCreateAudModa(true)}>Создать аудиторию</Button>
                 </Col>
             </Row>
@@ -35,45 +20,67 @@ const FormCreateAud = () => {
                         <Modal.Header closeButton>
                             <Modal.Title>Заполните форму</Modal.Title>
                         </Modal.Header>
-                        <Form noValidate validated={validated} onSubmit={addNewAud}>
-                            <Modal.Body>
-                                <Row>
-                                    <Col>
-
-                                        <Form.Group className="mb-3" controlId="formGroupName">
-                                            <Form.Label>Аудитория</Form.Label>
-                                            <Form.Control type="text" placeholder="номер аудитории..."
-                                                required
-                                                onChange={e => setNewAud({ ...newAud, name: e.target.value })}
-                                            />
-                                            <Form.Control.Feedback type="invalid">
-                                                Введите номер аудитории!
-                                            </Form.Control.Feedback>
-                                            <Form.Control.Feedback type="invalid">
-                                                Такая аудитория уже существусу
-                                            </Form.Control.Feedback>
-                                        </Form.Group>
-                                        <Form.Group className="mb-3" controlId="formGroupNotation">
-                                            <Form.Label>Примечание</Form.Label>
-                                            <Form.Control type="text" placeholder="не обязательно"
-                                                onChange={e => setNewAud({ ...newAud, notation: `(${e.target.value})` })}
-                                            />
-                                        </Form.Group>
-                                    </Col>
-                                </Row>
-                            </Modal.Body>
-                            <Modal.Footer>
-                                <Button variant="primary"
-                                    type="submit"
-                                >
-                                    Добавить
-                                </Button>
-                            </Modal.Footer>
-                        </Form>
+                        <Formik
+                            initialValues={{ name: 0, notation: '' }}
+                            validate={values => {
+                                const errors = {};
+                                if (!values.name) {
+                                    errors.name = 'Введите номер аудитории!';
+                                } else if (audList.find(aud => aud.name == values.name)) {
+                                    errors.name = 'Такая аудитория уже существует!';
+                                }
+                                console.log(errors);
+                                return errors;
+                            }}
+                            onSubmit={(values) => {
+                                console.log(values);
+                                setAudList([...audList, values])
+                                setShowFormCreateAudModa(false)
+                            }}
+                        >
+                            {
+                                formik => (
+                                    <Form noValidate onSubmit={formik.handleSubmit}>
+                                        <Modal.Body>
+                                            <Row>
+                                                <Col>
+                                                    <Form.Group className="mb-3" controlId="formGroupName">
+                                                        <Form.Label>Аудитория</Form.Label>
+                                                        <Form.Control type="number" name='name' placeholder="номер аудитории..."
+                                                            onChange={formik.handleChange}
+                                                            isValid={formik.touched.name && !formik.errors.name}
+                                                            isInvalid={formik.errors.name}
+                                                            onBlur={formik.handleBlur}
+                                                        />
+                                                        <Form.Control.Feedback type="valid">Готово!</Form.Control.Feedback>
+                                                        <Form.Control.Feedback type="invalid">
+                                                            {formik.errors.name}
+                                                        </Form.Control.Feedback>
+                                                    </Form.Group>
+                                                    <Form.Group className="mb-3" controlId="formGroupNotation">
+                                                        <Form.Label>Примечание</Form.Label>
+                                                        <Form.Control type="text" name='notation' placeholder="не обязательно"
+                                                            onChange={formik.handleChange}
+                                                        />
+                                                    </Form.Group>
+                                                </Col>
+                                            </Row>
+                                        </Modal.Body>
+                                        <Modal.Footer>
+                                            <Button variant="primary"
+                                                type="submit"
+                                            >
+                                                Добавить
+                                            </Button>
+                                        </Modal.Footer>
+                                    </Form>
+                                )
+                            }
+                        </Formik>
                     </Modal>
                 </Col>
             </Row >
-        </div>
+        </div >
 
     )
 }
