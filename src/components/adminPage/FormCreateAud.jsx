@@ -1,22 +1,23 @@
 import { Formik, useFormik } from 'formik'
 import React, { useContext, useState } from 'react'
 import { Button, Card, Col, Form, InputGroup, Modal, Row } from 'react-bootstrap'
+import axiosInstance from '../../axios'
 import { AudListContext } from '../../context'
 
 const FormCreateAud = () => {
-    const [showFormCreateAudModal, setShowFormCreateAudModa] = useState(false)
+    const [showFormCreateAudModal, setShowFormCreateAudModal] = useState(false)
     const { audList, setAudList } = useContext(AudListContext)
 
     return (
         <div>
             <Row className='justify-content-md-center'>
                 <Col>
-                    <Button onClick={() => setShowFormCreateAudModa(true)}>Создать аудиторию</Button>
+                    <Button onClick={() => setShowFormCreateAudModal(true)}>Создать аудиторию</Button>
                 </Col>
             </Row>
             <Row>
                 <Col>
-                    <Modal show={showFormCreateAudModal} onHide={() => setShowFormCreateAudModa(false)}>
+                    <Modal show={showFormCreateAudModal} onHide={() => setShowFormCreateAudModal(false)}>
                         <Modal.Header closeButton>
                             <Modal.Title>Заполните форму</Modal.Title>
                         </Modal.Header>
@@ -29,13 +30,19 @@ const FormCreateAud = () => {
                                 } else if (audList.find(aud => aud.name == values.name)) {
                                     errors.name = 'Такая аудитория уже существует!';
                                 }
-                                console.log(errors);
                                 return errors;
                             }}
                             onSubmit={(values) => {
-                                console.log(values);
+
                                 setAudList([...audList, values])
-                                setShowFormCreateAudModa(false)
+                                axiosInstance.post('/createAud ',values)
+                                    .then(function (response) {
+                                        console.log(response);
+                                    })
+                                    .catch(function (error) {
+                                        console.log(error);
+                                    })
+                                setShowFormCreateAudModal(false)
                             }}
                         >
                             {

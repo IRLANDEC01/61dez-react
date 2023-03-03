@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import { BrowserRouter } from "react-router-dom";
+import axiosInstance from "./axios";
 import AppRouter from "./components/AppRouter";
 import NavBar from "./components/UI/NavBar";
 
@@ -42,24 +43,21 @@ const auds = [
 ]
 
 const cadetCourses = [2, 3, 4, 5]
-const cadetGroups = [
-  {
-    name: 611 / 11,
-    course: 2
-  },
-  { 
-    name: 611 / 12,
-    course: 2
-  },
-  {
-    name: 611 / 12,
-    course: 2
-  },
 
-]
 
 export const App = () => {
   const [audList, setAudList] = useState(auds)
+
+  useEffect(() => {
+    axiosInstance.get('/getAuds ')
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+  }, [])
+
   return (
     <Container fluid>
       <AudListContext.Provider value={{
