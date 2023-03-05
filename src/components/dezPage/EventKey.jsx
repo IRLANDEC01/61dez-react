@@ -12,24 +12,25 @@ const EventKey = ({ eventKey, number, deleteEventKey, passEventKey, openChangeMo
       <td>{eventKey.timeToTakeKey}</td>
       <td>
         {eventKey.isUsed ?
-          <Badge pill bg="success">
+          <Badge pill bg="success"> 
             Используется
           </Badge> :
           eventKey.timeToPassKey
         }
       </td>
-      {eventKey.isUsed ?
+      {eventKey.isUsed ?  
         <td>
-          <Button
+          <Button 
             variant="primary"
             onClick={() => openChangeModal(eventKey)}
           >Изменить
           </Button>
           <Button
             variant="primary"
-            onClick={() => deleteEventKey(eventKey)}
+            onClick={() => deleteEventKey(eventKey.id)}
           >
-            Удалить</Button>
+            Удалить
+          </Button>
           <Button variant='primary'
             onClick={() => passEventKey(eventKey)}
           >

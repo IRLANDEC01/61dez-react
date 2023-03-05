@@ -12,7 +12,7 @@ import History from "../pages/History.jsx";
 export const publicRoutes = [
     {path: '/dez', element: Dez, exact: true},
     {path: '/admin', element: Admin, exact: true},
-    {path: '/aud', element: Aud, exact: true},
+    {path: '/auds', element: Aud, exact: true},
     {path: '/groups', element: Groups, exact: true},
     {path: '/history', element: History, exact: true},
 ]

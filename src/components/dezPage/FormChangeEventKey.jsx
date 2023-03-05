@@ -1,9 +1,10 @@
+import { Formik } from 'formik'
 import React, { useContext } from 'react'
 import { Button, Col, Form, Modal, Row } from 'react-bootstrap'
-import { AudListContext } from '../context'
+import { AudsContext } from '../../context'
 
-const FormChangeEventKey = ({ showFormChangeModal, setShowFormChangeModal, changeableEventKey,setChangeableEventKey, change }) => {
-    const { audList } = useContext(AudListContext)
+const FormChangeEventKey = ({ showFormChangeModal, setShowFormChangeModal, changeableEventKey, setChangeableEventKey, change }) => {
+    const { auds  } = useContext(AudsContext)
 
     const changeEventKey = (e) => {
         e.preventDefault()
@@ -11,9 +12,9 @@ const FormChangeEventKey = ({ showFormChangeModal, setShowFormChangeModal, chang
             ...changeableEventKey,
             timeToTakeKey: new Date(Date.now()).toLocaleString().split(',')[1],
             timeToPassKey: null,
-            isUsed: true
+            isUsed: true  
         }
-        change(updateEventKey)
+        change(updateEventKey) 
     }
     return (
         <Row>
@@ -22,24 +23,28 @@ const FormChangeEventKey = ({ showFormChangeModal, setShowFormChangeModal, chang
                     <Modal.Header closeButton>
                         <Modal.Title>Изменить запись</Modal.Title>
                     </Modal.Header>
+                    <Formik
+                    
+                    >
+
                     <Form onSubmit={changeEventKey}>
                         <Modal.Body>
                             <Row>
                                 <Col>
-                                    <Form.Group className="mb-3" controlId="formGroupEmail">
+                                    <Form.Group className="mb-3" controlId="formGroupAud">
                                         <Form.Select aria-label="Default select example"
-                                        defaultValue={'11111'}
-                                        onChange={e => setChangeableEventKey({ ...changeableEventKey, aud: e.target.value })}
+                                      
+                                            onChange={e => setChangeableEventKey({ ...changeableEventKey, aud: e.target.value })}
                                         >
                                             <option  >Аудитория</option>
-                                            {audList.map((aud) => <option key={aud.name} value={aud.name}>{aud.name + ' ' + aud.notation}</option>)}
+                                            {auds.map((aud) => <option key={aud.name} value={aud.name}>{aud.name + ' ' + aud?.notation}</option>)}
                                         </Form.Select>
                                     </Form.Group>
                                 </Col>
                                 <Col>
 
                                     <Form.Select aria-label="Default select example"
-                                     onChange={e => setChangeableEventKey({ ...changeableEventKey, course: e.target.value })}
+                                        onChange={e => setChangeableEventKey({ ...changeableEventKey, course: e.target.value })}
                                     >
                                         <option >Курс</option>
                                         <option value="2">2</option>
@@ -68,6 +73,8 @@ const FormChangeEventKey = ({ showFormChangeModal, setShowFormChangeModal, chang
                             </Button>
                         </Modal.Footer>
                     </Form>
+                    </Formik>
+
                 </Modal>
             </Col>
         </Row >

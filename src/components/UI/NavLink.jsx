@@ -21,7 +21,7 @@ const NavigationLink = () => {
                 >
                     Выдача ключей
                 </NavLink>
-                <NavLink as={Link} to="/aud"
+                <NavLink as={Link} to="/auds"
                 >
                     Аудитории
                 </NavLink>

@@ -1,75 +1,67 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Container } from "react-bootstrap";
 import { BrowserRouter } from "react-router-dom";
-import axiosInstance from "./axios";
+import APIAuds from "./API/auds";
+import APIEventKeys from "./API/eventKeys";
+import APIGroups from "./API/groups";
 import AppRouter from "./components/AppRouter";
 import NavBar from "./components/UI/NavBar";
-
-import { AudListContext } from "./context";
-
-const auds = [
-  {
-    name: 213,
-    notation: ''
-  },
-  {
-    name: 216,
-    notation: ''
-  },
-  {
-    name: 219,
-    notation: ''
-  },
-  {
-    name: 221,
-    notation: ''
-  },
-  {
-    name: 223,
-    notation: ''
-  },
-  {
-    name: 231,
-    notation: ''
-  },
-  {
-    name: 225,
-    notation: ''
-  },
-  {
-    name: 314,
-    notation: 'Буфет'
-  }
-]
-
-const cadetCourses = [2, 3, 4, 5]
-
+import { AudsContext } from "./context";
+import { GroupsContext } from "./context";
+import { EventKeysContext } from "./context";
 
 export const App = () => {
-  const [audList, setAudList] = useState(auds)
+  const [auds, setAuds] = useState([])
+  const [groups, setGroups] = useState([])
+  const [eventKeys, setEventKeys] = useState([])
 
   useEffect(() => {
-    axiosInstance.get('/getAuds ')
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      })
+    const fetchData = async () => {
+      setAuds(await APIAuds.getAuds())
+    }
+    fetchData();
   }, [])
 
+  useEffect(() => {
+    const fetchData = async () => {
+      setGroups(await APIGroups.getGroups())
+    }
+    fetchData();
+  }, [])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setEventKeys(await APIEventKeys.getEventKeys())
+    }
+    fetchData();
+  }, [])
+  console.log('render');
   return (
     <Container fluid>
-      <AudListContext.Provider value={{
-        audList,
-        setAudList
-      }} >
-        <BrowserRouter>
-
-          <NavBar></NavBar>
-          <AppRouter />
-        </BrowserRouter>
-      </AudListContext.Provider>
+      <AudsContext.Provider
+        value={{
+          auds: auds,
+          setAuds: setAuds
+        }} >
+        <GroupsContext.Provider
+          value={{
+            groups: groups,
+            setGroups: setGroups
+          }}
+        >
+          <EventKeysContext.Provider
+            value={{
+              eventKeys: eventKeys,
+              setEventKeys: setEventKeys
+            }}
+          >
+            <BrowserRouter>
+              <NavBar></NavBar>
+              <AppRouter />
+            </BrowserRouter>
+          </EventKeysContext.Provider>
+        </GroupsContext.Provider>
+      </AudsContext.Provider>
     </Container>
   );
 }

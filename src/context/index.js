@@ -1,3 +1,5 @@
 import { createContext } from "react";
 
-export const AudListContext = createContext()
+export const AudsContext = createContext([])
+export const GroupsContext = createContext([])
+export const EventKeysContext = createContext([])

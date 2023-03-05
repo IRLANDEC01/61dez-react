@@ -1,12 +1,12 @@
-import { Formik, useFormik } from 'formik'
+import { Formik } from 'formik'
 import React, { useContext, useState } from 'react'
-import { Button, Card, Col, Form, InputGroup, Modal, Row } from 'react-bootstrap'
-import axiosInstance from '../../axios'
-import { AudListContext } from '../../context'
+import { Button, Col, Form, Modal, Row } from 'react-bootstrap'
+import APIAuds from '../../API/auds'
+import { AudsContext } from '../../context'
 
 const FormCreateAud = () => {
     const [showFormCreateAudModal, setShowFormCreateAudModal] = useState(false)
-    const { audList, setAudList } = useContext(AudListContext)
+    const { auds, setAuds } = useContext(AudsContext)
 
     return (
         <div>
@@ -27,21 +27,14 @@ const FormCreateAud = () => {
                                 const errors = {};
                                 if (!values.name) {
                                     errors.name = 'Введите номер аудитории!';
-                                } else if (audList.find(aud => aud.name == values.name)) {
+                                } else if (auds.find(aud => aud.name == values.name)) {
                                     errors.name = 'Такая аудитория уже существует!';
                                 }
                                 return errors;
                             }}
-                            onSubmit={(values) => {
-
-                                setAudList([...audList, values])
-                                axiosInstance.post('/createAud ',values)
-                                    .then(function (response) {
-                                        console.log(response);
-                                    })
-                                    .catch(function (error) {
-                                        console.log(error);
-                                    })
+                            onSubmit={async (values) => {
+                                await APIAuds.createAud(values)
+                                setAuds([...auds, values])
                                 setShowFormCreateAudModal(false)
                             }}
                         >

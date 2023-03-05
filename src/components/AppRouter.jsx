@@ -3,7 +3,6 @@ import { Redirect, Route, Routes } from "react-router-dom";
 import { publicRoutes } from "../router/router.jsx";
 
 const AppRouter = () => {
-
     return (
         <Routes>
             {publicRoutes.map(route =>
