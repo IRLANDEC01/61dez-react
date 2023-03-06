@@ -10,6 +10,10 @@ const FormCreateEventKey = ({ showFormCreateModal, setShowFormCreateModal }) => 
     const { groups } = useContext(GroupsContext)
     const { setEventKeys } = useContext(EventKeysContext)
 
+    const freeAuds = useMemo(() => {
+        return auds.filter((aud) => !aud.isUsed)
+    }, [auds])
+    console.log(freeAuds);
 
     const createEventKey = async (eventKey) => {
         await APIEventKeys.createEventKey(eventKey)
@@ -35,10 +39,8 @@ const FormCreateEventKey = ({ showFormCreateModal, setShowFormCreateModal }) => 
                         </Card.Body>
                         <Card.Footer className="text-muted">Свободные аудитории:</Card.Footer>
                         <Card.Footer className="text-muted">
-                            {auds.map(aud =>
-                                !aud?.isUsed ?
-                                    aud.name + (aud.notation ? ` (${aud.notation}), ` : ', ')
-                                    : null
+                            {freeAuds.map(aud =>
+                                aud.name + (aud.notation ? ` (${aud.notation}), ` : ', ')
                             )}
                         </Card.Footer>
                     </Card>
@@ -98,7 +100,7 @@ const FormCreateEventKey = ({ showFormCreateModal, setShowFormCreateModal }) => 
                                                             onBlur={handleBlur}
                                                         >
                                                             <option> Не выбрано</option>
-                                                            {auds.map((aud) =>
+                                                            {freeAuds.map((aud) =>
                                                                 <option key={aud.name} value={aud.name}>
                                                                     {aud.name + (aud.notation ? ` (${aud.notation})` : null)}
                                                                 </option>)}

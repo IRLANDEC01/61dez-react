@@ -3,7 +3,7 @@ import { Col, Row, Table } from 'react-bootstrap'
 import { EventKeysContext } from '../../context'
 import EventKey from './EventKey'
 
-const TableEventKeys = ({ openChangeModal }) => {
+const TableEventKeys = () => {
     const { eventKeys } = useContext(EventKeysContext)
 
     return (
@@ -27,7 +27,6 @@ const TableEventKeys = ({ openChangeModal }) => {
                                 key={event.id}
                                 eventKey={event}
                                 number={index + 1}
-                                openChangeModal={openChangeModal}
                             >
                             </EventKey>
                         )}

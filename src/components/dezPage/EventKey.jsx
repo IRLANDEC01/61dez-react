@@ -4,7 +4,7 @@ import APIAuds from '../../API/auds'
 import APIEventKeys from '../../API/eventKeys'
 import { AudsContext, EventKeysContext } from '../../context'
 
-const EventKey = ({ eventKey, number, openChangeModal }) => {
+const EventKey = ({ eventKey, number }) => {
   const { setEventKeys } = useContext(EventKeysContext)
   const { setAuds } = useContext(AudsContext)
 
@@ -20,7 +20,9 @@ const EventKey = ({ eventKey, number, openChangeModal }) => {
       timeToPassKey: new Date(Date.now()).toLocaleString().split(',')[1]
     }
     await APIEventKeys.passEventKey(id, update)
+    await APIAuds.updateStateAud(eventKey.aud)
     setEventKeys(await APIEventKeys.getEventKeys())
+    setAuds(await APIAuds.getAuds())
   }
 
   return (
@@ -34,17 +36,13 @@ const EventKey = ({ eventKey, number, openChangeModal }) => {
         {eventKey.isUsed ?
           <Badge pill bg="success">
             Используется
-          </Badge> :
+          </Badge>
+          :
           eventKey.timeToPassKey
         }
       </td>
       {eventKey.isUsed ?
         <td>
-          <Button
-            variant="primary"
-            onClick={() => openChangeModal(eventKey)}
-          >Изменить
-          </Button>
           <Button
             variant="primary"
             onClick={() => deleteEventKey(eventKey.id)}
@@ -55,7 +53,8 @@ const EventKey = ({ eventKey, number, openChangeModal }) => {
             onClick={() => passEventKey(eventKey.id)}
           >
             Сдать аудиторию</Button>
-        </td> :
+        </td>
+        :
         <td></td>
       }
     </tr>
