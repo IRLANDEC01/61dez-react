@@ -1,4 +1,5 @@
 import { Formik } from 'formik'
+import moment from 'moment'
 import React, { useContext, useMemo, useState } from 'react'
 import { Button, Card, Col, Form, Modal, Row } from 'react-bootstrap'
 import APIAuds from '../../API/auds'
@@ -71,6 +72,7 @@ const FormCreateEventKey = ({ showFormCreateModal, setShowFormCreateModal }) => 
                                 const newEventKey = {
                                     ...values,
                                     id: Date.now(),
+                                    date: moment(Date.now()).format('DD-MM-YYYY'),
                                     aud: Number(values.aud),
                                     timeToTakeKey: new Date(Date.now()).toLocaleString().split(',')[1],
                                     timeToPassKey: null,
