@@ -12,7 +12,6 @@ const Dez = () => {
   const [changeableEventKey, setChangeableEventKey] = useState(false)
 
   const { eventKeys, setEventKeys } = useContext(EventKeysContext)
-  const { auds, setAuds } = useContext(AudsContext)
 
   const createEventKey = async (newEventKey) => {
     await APIEventKeys.createEventKey(newEventKey)

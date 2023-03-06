@@ -8,6 +8,11 @@ const FormCreateGroup = () => {
     const [showFormCreateGroupModal, setShowFormCreateGroupModal] = useState(false)
     const { groups, setGroups } = useContext(GroupsContext)
 
+    const createGroup = async (values) => {
+        await APIGroups.createGroup(values)
+        setGroups(await APIGroups.getGroups())
+        setShowFormCreateGroupModal(false)
+    }
     return (
         <div>
             <Row className='justify-content-md-center'>
@@ -36,11 +41,7 @@ const FormCreateGroup = () => {
                                 }
                                 return errors;
                             }}
-                            onSubmit={async (values) => {
-                                await APIGroups.createGroup(values)
-                                setGroups([...groups, values])
-                                setShowFormCreateGroupModal(false)
-                            }}
+                            onSubmit={async (values) => { createGroup(values) }}
                         >
                             {
                                 ({

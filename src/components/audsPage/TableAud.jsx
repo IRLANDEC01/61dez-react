@@ -4,7 +4,7 @@ import { AudsContext } from '../../context'
 import Aud from './Aud'
 
 
-const TableAud = ({  deleteAud}) => {
+const TableAud = () => {
     const { auds } = useContext(AudsContext)
     return (
         <Row>
@@ -24,7 +24,6 @@ const TableAud = ({  deleteAud}) => {
                                 aud={aud}
                                 key={aud.name}
                                 number={index + 1}
-                                deleteAud={deleteAud}
                             >
                             </Aud>
                         )}

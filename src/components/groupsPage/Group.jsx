@@ -1,7 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Button } from 'react-bootstrap'
+import APIGroups from '../../API/groups';
+import { GroupsContext } from '../../context';
 
-const Group = ({ group, number, deleteGroup }) => {
+const Group = ({ group, number }) => {
+    const { setGroups } = useContext(GroupsContext)
+
+    const deleteGroup = async (goupName) => {
+        await APIGroups.deleteGroup(goupName)
+        setGroups(await APIGroups.getGroups())
+    }
     return (
         <tr>
             <td>{number}</td>

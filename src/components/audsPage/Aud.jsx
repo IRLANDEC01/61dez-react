@@ -1,7 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Button } from 'react-bootstrap'
+import APIAuds from '../../API/auds'
+import { AudsContext } from '../../context'
 
-const Aud = ({ aud, number, deleteAud }) => {
+const Aud = ({ aud, number }) => {
+  const { setAuds } = useContext(AudsContext)
+  
+  const deleteAud = async (audName) => {
+    await APIAuds.deleteAud(audName)
+    setAuds(await APIAuds.getAuds())
+  }
   return (
     <tr>
       <td>{number}</td>
@@ -10,7 +18,7 @@ const Aud = ({ aud, number, deleteAud }) => {
       <td>
         <Button
           variant="primary"
-          onClick={() => deleteAud(aud.name)}
+          onClick={async () => deleteAud(aud.name)}
         >
           Удалить
         </Button>

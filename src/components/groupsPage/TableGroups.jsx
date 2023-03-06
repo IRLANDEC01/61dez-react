@@ -3,7 +3,7 @@ import { Col, Row, Table } from 'react-bootstrap'
 import { GroupsContext } from '../../context'
 import Group from './Group'
 
-const TableGroups = ({deleteGroup}) => {
+const TableGroups = () => {
     const { groups } = useContext(GroupsContext)
     return (
         <Row>
@@ -23,7 +23,6 @@ const TableGroups = ({deleteGroup}) => {
                                 group={group}
                                 key={group.name}
                                 number={index + 1} 
-                                deleteGroup={deleteGroup}
                             >
                             </Group>
                         )}

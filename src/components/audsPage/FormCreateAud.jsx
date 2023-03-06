@@ -8,6 +8,11 @@ const FormCreateAud = () => {
     const [showFormCreateAudModal, setShowFormCreateAudModal] = useState(false)
     const { auds, setAuds } = useContext(AudsContext)
 
+    const createAud = async (values) => {
+        await APIAuds.createAud(values)
+        setAuds(await APIAuds.getAuds())
+        setShowFormCreateAudModal(false)
+    }
     return (
         <div>
             <Row className='justify-content-md-center'>
@@ -32,11 +37,7 @@ const FormCreateAud = () => {
                                 }
                                 return errors;
                             }}
-                            onSubmit={async (values) => {
-                                await APIAuds.createAud(values)
-                                setAuds([...auds, values])
-                                setShowFormCreateAudModal(false)
-                            }}
+                            onSubmit={(values) => { createAud(values) }}
                         >
                             {
                                 formik => (

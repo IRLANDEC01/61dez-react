@@ -1,11 +1,23 @@
 import { Formik } from 'formik'
 import React, { useContext, useMemo, useState } from 'react'
 import { Button, Card, Col, Form, Modal, Row } from 'react-bootstrap'
+import APIAuds from '../../API/auds'
+import APIEventKeys from '../../API/eventKeys'
 import { AudsContext, EventKeysContext, GroupsContext } from '../../context'
 
 const FormCreateEventKey = ({ showFormCreateModal, setShowFormCreateModal, create }) => {
-    const { auds } = useContext(AudsContext)
+    const { auds, setAuds } = useContext(AudsContext)
     const { groups } = useContext(GroupsContext)
+    const { setEventKeys } = useContext(EventKeysContext)
+
+    const createEventKey = async (eventKey) => {
+        await APIEventKeys.createEventKey(eventKey)
+        await APIAuds.updateStateAud(eventKey.aud)
+        setAuds(await APIAuds.getAuds())
+        setEventKeys(await APIEventKeys.getEventKeys())
+        setShowFormCreateModal(false)
+    }
+
     return (
         <div>
             <Row>
@@ -61,8 +73,7 @@ const FormCreateEventKey = ({ showFormCreateModal, setShowFormCreateModal, creat
                                     timeToPassKey: null,
                                     isUsed: true
                                 }
-                            
-                                create(newEventKey)
+                                createEventKey(newEventKey)
                             }}
                         >
                             {
