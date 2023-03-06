@@ -37,7 +37,7 @@ const FormCreateAud = () => {
                                 }
                                 return errors;
                             }}
-                            onSubmit={(values) => { createAud(values) }}
+                            onSubmit={(values) => { createAud({ ...values, isUsed: false }) }}
                         >
                             {
                                 formik => (
@@ -82,7 +82,6 @@ const FormCreateAud = () => {
                 </Col>
             </Row >
         </div >
-
     )
 }
 

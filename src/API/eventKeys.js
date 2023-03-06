@@ -22,8 +22,8 @@ export default class APIEventKeys {
                 console.error(error.message);
             })
     }
-    static async deleteEventKey(eventKeyID) {
-        instance.post('/deleteEventKey', { id: eventKeyID })
+    static async deleteEventKey(id) {
+        instance.post('/deleteEventKey', { id })
             .then((response) => {
                 console.log(response.data.message);
             })
@@ -31,8 +31,8 @@ export default class APIEventKeys {
                 console.error(error.message);
             })
     }
-    static async passEventKey(eventKeyID, update) {
-        instance.post('/passEventKey', { id: eventKeyID, update })
+    static async passEventKey(id, update) {
+        instance.post('/passEventKey', { id, update })
             .then((response) => {
                 console.log(response.data.message);
             })

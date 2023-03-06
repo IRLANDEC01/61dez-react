@@ -1,15 +1,28 @@
 import React, { useContext } from 'react'
 import { Badge, Button } from 'react-bootstrap'
+import APIAuds from '../../API/auds'
 import APIEventKeys from '../../API/eventKeys'
-import { EventKeysContext } from '../../context'
+import { AudsContext, EventKeysContext } from '../../context'
 
-const EventKey = ({ eventKey, number, passEventKey, openChangeModal }) => {
+const EventKey = ({ eventKey, number, openChangeModal }) => {
   const { setEventKeys } = useContext(EventKeysContext)
+  const { setAuds } = useContext(AudsContext)
 
   const deleteEventKey = async (id) => {
     await APIEventKeys.deleteEventKey(id)
+    await APIAuds.updateStateAud(eventKey.aud)
+    setEventKeys(await APIEventKeys.getEventKeys())
+    setAuds(await APIAuds.getAuds())
+  }
+  const passEventKey = async (id) => {
+    const update = {
+      isUsed: false,
+      timeToPassKey: new Date(Date.now()).toLocaleString().split(',')[1]
+    }
+    await APIEventKeys.passEventKey(id, update)
     setEventKeys(await APIEventKeys.getEventKeys())
   }
+
   return (
     <tr>
       <td>{number}</td>
@@ -39,7 +52,7 @@ const EventKey = ({ eventKey, number, passEventKey, openChangeModal }) => {
             Удалить
           </Button>
           <Button variant='primary'
-            onClick={() => passEventKey(eventKey)}
+            onClick={() => passEventKey(eventKey.id)}
           >
             Сдать аудиторию</Button>
         </td> :

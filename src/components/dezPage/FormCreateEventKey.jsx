@@ -5,16 +5,17 @@ import APIAuds from '../../API/auds'
 import APIEventKeys from '../../API/eventKeys'
 import { AudsContext, EventKeysContext, GroupsContext } from '../../context'
 
-const FormCreateEventKey = ({ showFormCreateModal, setShowFormCreateModal, create }) => {
+const FormCreateEventKey = ({ showFormCreateModal, setShowFormCreateModal }) => {
     const { auds, setAuds } = useContext(AudsContext)
     const { groups } = useContext(GroupsContext)
     const { setEventKeys } = useContext(EventKeysContext)
 
+
     const createEventKey = async (eventKey) => {
         await APIEventKeys.createEventKey(eventKey)
         await APIAuds.updateStateAud(eventKey.aud)
-        setAuds(await APIAuds.getAuds())
         setEventKeys(await APIEventKeys.getEventKeys())
+        setAuds(await APIAuds.getAuds())
         setShowFormCreateModal(false)
     }
 
