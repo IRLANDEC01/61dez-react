@@ -6,8 +6,8 @@ import { AudsContext } from '../../context'
 const Aud = ({ aud, number }) => {
   const { setAuds } = useContext(AudsContext)
   
-  const deleteAud = async (audName) => {
-    await APIAuds.deleteAud(audName)
+  const deleteAud = async (id) => {
+    await APIAuds.deleteAud(id)
     setAuds(await APIAuds.getAuds())
   }
   return (
@@ -18,7 +18,7 @@ const Aud = ({ aud, number }) => {
       <td>
         <Button
           variant="primary"
-          onClick={async () => deleteAud(aud.name)}
+          onClick={async () => deleteAud(aud._id)}
         >
           Удалить
         </Button>

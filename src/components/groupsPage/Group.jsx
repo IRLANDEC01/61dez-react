@@ -6,8 +6,8 @@ import { GroupsContext } from '../../context';
 const Group = ({ group, number }) => {
     const { setGroups } = useContext(GroupsContext)
 
-    const deleteGroup = async (goupName) => {
-        await APIGroups.deleteGroup(goupName)
+    const deleteGroup = async (id) => {
+        await APIGroups.deleteGroup(id)
         setGroups(await APIGroups.getGroups())
     }
     return (
@@ -18,7 +18,7 @@ const Group = ({ group, number }) => {
             <td>
                 <Button
                     variant="primary"
-                    onClick={() => deleteGroup(group.name)}
+                    onClick={() => deleteGroup(group._id)}
                 >
                     Удалить
                 </Button>

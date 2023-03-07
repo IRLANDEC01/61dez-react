@@ -2,7 +2,6 @@ import instance from ".";
 
 export default class APIEventKeys {
 
-
     static async getEventKeys() {
         return await instance.get('/getEventKeys')
             .then((response) => {

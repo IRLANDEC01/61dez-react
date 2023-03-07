@@ -20,8 +20,8 @@ export default class APIGroups {
                 console.error(error.message);
             })
     }
-    static async deleteGroup(groupName) {
-      await instance.post('/deleteGroup', { name: groupName })
+    static async deleteGroup(id) {
+      await instance.post('/deleteGroup', { id })
             .then((response) => {
                 console.log(response.data.message);
             })

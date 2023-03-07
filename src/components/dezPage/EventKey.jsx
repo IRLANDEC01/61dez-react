@@ -45,12 +45,12 @@ const EventKey = ({ eventKey, number }) => {
         <td>
           <Button
             variant="primary"
-            onClick={() => deleteEventKey(eventKey.id)}
+            onClick={() => deleteEventKey(eventKey._id)}
           >
             Удалить
           </Button>
           <Button variant='primary'
-            onClick={() => passEventKey(eventKey.id)}
+            onClick={() => passEventKey(eventKey._id)}
           >
             Сдать аудиторию</Button>
         </td>

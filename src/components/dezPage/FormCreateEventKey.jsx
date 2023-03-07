@@ -1,10 +1,11 @@
 import { Formik } from 'formik'
 import moment from 'moment'
-import React, { useContext, useMemo, useState } from 'react'
+import React, { useContext, useMemo } from 'react'
 import { Button, Card, Col, Form, Modal, Row } from 'react-bootstrap'
 import APIAuds from '../../API/auds'
 import APIEventKeys from '../../API/eventKeys'
 import { AudsContext, EventKeysContext, GroupsContext } from '../../context'
+
 
 const FormCreateEventKey = ({ showFormCreateModal, setShowFormCreateModal }) => {
     const { auds, setAuds } = useContext(AudsContext)
@@ -71,7 +72,6 @@ const FormCreateEventKey = ({ showFormCreateModal, setShowFormCreateModal }) => 
                             onSubmit={(values) => {
                                 const newEventKey = {
                                     ...values,
-                                    id: Date.now(),
                                     date: moment(Date.now()).format('DD-MM-YYYY'),
                                     aud: Number(values.aud),
                                     timeToTakeKey: new Date(Date.now()).toLocaleString().split(',')[1],
@@ -103,7 +103,7 @@ const FormCreateEventKey = ({ showFormCreateModal, setShowFormCreateModal }) => 
                                                         >
                                                             <option> Не выбрано</option>
                                                             {freeAuds.map((aud) =>
-                                                                <option key={aud.name} value={aud.name}>
+                                                                <option key={aud._id} value={aud.name}>
                                                                     {aud.name + (aud.notation ? ` (${aud.notation})` : null)}
                                                                 </option>)}
                                                         </Form.Select>
@@ -148,7 +148,7 @@ const FormCreateEventKey = ({ showFormCreateModal, setShowFormCreateModal }) => 
                                                             onBlur={handleBlur}
                                                         >
                                                             <option> Не выбрано</option>
-                                                            {groups.map(group => <option key={group.name} value={group.name}>{group.name}</option>)}
+                                                            {groups.map(group => <option key={group._id} value={group.name}>{group.name}</option>)}
                                                         </Form.Select>
                                                         <Form.Control.Feedback type="valid">Готово!</Form.Control.Feedback>
                                                         <Form.Control.Feedback type="invalid">

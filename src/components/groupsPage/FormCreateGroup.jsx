@@ -33,7 +33,7 @@ const FormCreateGroup = () => {
                                 if (!values.name) {
                                     errors.name = 'Введите название группы!';
                                 }
-                                if (groups.find(group => group.name == values.name)) {
+                                if (groups.find(group => group.name === values.name)) {
                                     errors.name = 'Такая группа уже существует!';
                                 }
                                 if (!values.course) {

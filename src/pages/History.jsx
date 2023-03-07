@@ -1,9 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Calendar from '../components/historyPage/calendar'
 import "react-datepicker/dist/react-datepicker.css";
+import TableHistory from '../components/historyPage/TableHistory';
 const History = () => {
+  const [historyEventKeys, setHistoryEventKeys] = useState([])
   return (
-    <Calendar></Calendar>
+    <div>
+      <Calendar
+      setHistoryEventKeys={setHistoryEventKeys}
+      ></Calendar>
+      <TableHistory 
+      historyEventKeys={historyEventKeys}
+      ></TableHistory>
+    </div>
   )
 }
 

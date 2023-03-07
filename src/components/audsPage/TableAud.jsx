@@ -22,7 +22,7 @@ const TableAud = () => {
                         {auds.map((aud, index) => 
                             <Aud
                                 aud={aud}
-                                key={aud.name}
+                                key={aud._id}
                                 number={index + 1}
                             >
                             </Aud>

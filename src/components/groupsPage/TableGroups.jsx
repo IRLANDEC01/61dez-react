@@ -21,7 +21,7 @@ const TableGroups = () => {
                         {groups.map((group, index) => 
                             <Group
                                 group={group}
-                                key={group.name}
+                                key={group._id}
                                 number={index + 1} 
                             >
                             </Group>

@@ -32,7 +32,7 @@ const FormCreateAud = () => {
                                 const errors = {};
                                 if (!values.name) {
                                     errors.name = 'Введите номер аудитории!';
-                                } else if (auds.find(aud => aud.name == values.name)) {
+                                } else if (auds.find(aud => aud.name === values.name)) {
                                     errors.name = 'Такая аудитория уже существует!';
                                 }
                                 return errors;

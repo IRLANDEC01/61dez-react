@@ -1,11 +1,11 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { Col, Row, Table } from 'react-bootstrap'
-import { EventKeysContext } from '../../context'
-import EventKey from './EventKey'
+import HistoryEventKey from './HistoryEventKey'
 
-const TableEventKeys = () => {
-    const { eventKeys } = useContext(EventKeysContext)
 
+const TableHistory = ({ historyEventKeys }) => {
+    console.log(historyEventKeys);
+    console.log('render history');
     return (
         <Row>
             <Col>
@@ -18,23 +18,22 @@ const TableEventKeys = () => {
                             <th>Группа</th>
                             <th>Время получения</th>
                             <th>Время сдачи</th>
-                            <th>Действие</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {eventKeys.map((event, index) =>
-                            <EventKey
-                                key={event._id}
+                        {historyEventKeys.map((event, index) =>
+                            <HistoryEventKey
+                                key={event.id}
                                 eventKey={event}
                                 number={index + 1}
                             >
-                            </EventKey>
+                            </HistoryEventKey>
                         )}
-                    </tbody >
+                    </tbody>
                 </Table>
             </Col>
         </Row>
     )
 }
 
-export default TableEventKeys
+export default TableHistory

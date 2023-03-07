@@ -1,10 +1,5 @@
-import { useContext } from "react";
 import instance from ".";
-import { EventKeysContext } from "../context";
-
 export default class APIAuds {
- 
-
     static async getAuds() {
         return await instance.get('/getAuds')
             .then((response) => {
@@ -24,8 +19,8 @@ export default class APIAuds {
                 console.error(error.message);
             })
     }
-    static async deleteAud(aud) {
-        await instance.post('/deleteAud', { name: aud })
+    static async deleteAud(id) {
+        await instance.post('/deleteAud', { id })
             .then((response) => {
                 console.log(response.data.message);
             })
@@ -33,8 +28,8 @@ export default class APIAuds {
                 console.error(error.message);
             })
     }
-    static async updateStateAud(aud) {
-        await instance.post('/updateStateAud', { name: aud })
+    static async updateStateAud(name) {
+        await instance.post('/updateStateAud', { name })
             .then((response) => {
                 console.log(response.data.message);
             })
