@@ -45,7 +45,7 @@ const EventKey = ({ eventKey, number }) => {
         <td>
           <Button
             variant="primary"
-            onClick={() => deleteEventKey(eventKey._id,eventKey.aud)}
+            onClick={() => deleteEventKey(eventKey._id, eventKey.aud)}
           >
             Удалить
           </Button>

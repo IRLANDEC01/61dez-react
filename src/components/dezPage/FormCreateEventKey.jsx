@@ -1,6 +1,6 @@
 import { Formik } from 'formik'
 import moment from 'moment'
-import React, { useContext, useMemo } from 'react'
+import React, { useContext, useMemo, useState } from 'react'
 import { Button, Card, Col, Form, Modal, Row } from 'react-bootstrap'
 import APIAuds from '../../API/auds'
 import APIEventKeys from '../../API/eventKeys'
@@ -11,11 +11,15 @@ const FormCreateEventKey = ({ showFormCreateModal, setShowFormCreateModal }) => 
     const { auds, setAuds } = useContext(AudsContext)
     const { groups } = useContext(GroupsContext)
     const { setEventKeys } = useContext(EventKeysContext)
+    const [selectedCourse, setSelectedCourse] = useState(null)
 
     const freeAuds = useMemo(() => {
         return auds.filter((aud) => !aud.isUsed)
     }, [auds])
-    console.log(freeAuds);
+
+    const setGroups = useMemo(() => {
+        return groups.filter((group) => group.course === selectedCourse)
+    }, [selectedCourse])
 
     const createEventKey = async (eventKey) => {
         await APIEventKeys.createEventKey(eventKey)
@@ -80,6 +84,7 @@ const FormCreateEventKey = ({ showFormCreateModal, setShowFormCreateModal }) => 
                                 }
                                 createEventKey(newEventKey)
                             }}
+
                         >
                             {
                                 ({
@@ -87,7 +92,8 @@ const FormCreateEventKey = ({ showFormCreateModal, setShowFormCreateModal }) => 
                                     touched,
                                     errors,
                                     handleBlur,
-                                    handleChange }) => (
+                                    handleChange,
+                                    setFieldValue }) => (
                                     <Form onSubmit={handleSubmit}>
                                         <Modal.Body>
                                             <Row>
@@ -120,7 +126,10 @@ const FormCreateEventKey = ({ showFormCreateModal, setShowFormCreateModal }) => 
                                                         <Form.Label>Курс</Form.Label>
                                                         <Form.Select aria-label="Default select example"
                                                             name='course'
-                                                            onChange={handleChange}
+                                                            onChange={e => {
+                                                                setSelectedCourse(e.target.value)
+                                                                setFieldValue("course", e.target.value)
+                                                            }}
                                                             isValid={touched.course && !errors.course}
                                                             isInvalid={errors.course}
                                                             onBlur={handleBlur}
@@ -148,7 +157,7 @@ const FormCreateEventKey = ({ showFormCreateModal, setShowFormCreateModal }) => 
                                                             onBlur={handleBlur}
                                                         >
                                                             <option> Не выбрано</option>
-                                                            {groups.map(group => <option key={group._id} value={group.name}>{group.name}</option>)}
+                                                            {setGroups.map(group => <option key={group._id} value={group.name}>{group.name}</option>)}
                                                         </Form.Select>
                                                         <Form.Control.Feedback type="valid">Готово!</Form.Control.Feedback>
                                                         <Form.Control.Feedback type="invalid">
