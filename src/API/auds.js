@@ -28,8 +28,8 @@ export default class APIAuds {
                 console.error(error.message);
             })
     }
-    static async updateStateAud(name) {
-        await instance.post('/updateStateAud', { name })
+    static async updateStateAud(aud) {
+        await instance.post('/updateStateAud', { aud })
             .then((response) => {
                 console.log(response.data.message);
             })

@@ -8,19 +8,19 @@ const EventKey = ({ eventKey, number }) => {
   const { setEventKeys } = useContext(EventKeysContext)
   const { setAuds } = useContext(AudsContext)
 
-  const deleteEventKey = async (id) => {
+  const deleteEventKey = async (id, aud) => {
     await APIEventKeys.deleteEventKey(id)
-    await APIAuds.updateStateAud(eventKey.aud)
+    await APIAuds.updateStateAud(aud)
     setEventKeys(await APIEventKeys.getEventKeys())
     setAuds(await APIAuds.getAuds())
   }
-  const passEventKey = async (id) => {
+  const passEventKey = async (id, aud) => {
     const update = {
       isUsed: false,
       timeToPassKey: new Date(Date.now()).toLocaleString().split(',')[1]
     }
     await APIEventKeys.passEventKey(id, update)
-    await APIAuds.updateStateAud(eventKey.aud)
+    await APIAuds.updateStateAud(aud)
     setEventKeys(await APIEventKeys.getEventKeys())
     setAuds(await APIAuds.getAuds())
   }
@@ -45,12 +45,12 @@ const EventKey = ({ eventKey, number }) => {
         <td>
           <Button
             variant="primary"
-            onClick={() => deleteEventKey(eventKey._id)}
+            onClick={() => deleteEventKey(eventKey._id,eventKey.aud)}
           >
             Удалить
           </Button>
           <Button variant='primary'
-            onClick={() => passEventKey(eventKey._id)}
+            onClick={() => passEventKey(eventKey._id, eventKey.aud)}
           >
             Сдать аудиторию</Button>
         </td>

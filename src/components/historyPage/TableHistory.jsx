@@ -23,7 +23,7 @@ const TableHistory = ({ historyEventKeys }) => {
                     <tbody>
                         {historyEventKeys.map((event, index) =>
                             <HistoryEventKey
-                                key={event.id}
+                                key={event._id}
                                 eventKey={event}
                                 number={index + 1}
                             >
