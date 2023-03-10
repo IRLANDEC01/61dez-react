@@ -1,28 +1,26 @@
 import React, { useContext } from 'react'
 import { Badge, Button } from 'react-bootstrap'
-import APIAuds from '../../API/auds'
+import APICurrentEK from '../../API/currentEK'
 import APIEventKeys from '../../API/eventKeys'
-import { AudsContext, EventKeysContext } from '../../context'
 
-const EventKey = ({ eventKey, number }) => {
-  const { setEventKeys } = useContext(EventKeysContext)
-  const { setAuds } = useContext(AudsContext)
+const EventKey = ({ eventKey, number, setCurrentEK }) => {
 
-  const deleteEventKey = async (id, aud) => {
-    await APIEventKeys.deleteEventKey(id)
-    await APIAuds.updateStateAud(aud)
-    setEventKeys(await APIEventKeys.getEventKeys())
-    setAuds(await APIAuds.getAuds())
+  const deleteCurrentEK = async () => {
+    await APICurrentEK.deleteCurrentEK(eventKey._id)
+    setCurrentEK(await APICurrentEK.getCurrentEK())
   }
-  const passEventKey = async (id, aud) => {
+  const passEventKey = async () => {
     const update = {
       isUsed: false,
-      timeToPassKey: new Date(Date.now()).toLocaleString().split(',')[1]
+      timeToPassKey: new Date(Date.now()).toLocaleString().split(', ')[1]
     }
-    await APIEventKeys.passEventKey(id, update)
-    await APIAuds.updateStateAud(aud)
-    setEventKeys(await APIEventKeys.getEventKeys())
-    setAuds(await APIAuds.getAuds())
+    await APICurrentEK.passCurrentEK(eventKey._id, update)
+    setCurrentEK(await APICurrentEK.getCurrentEK())
+    const newEventKey = {
+      ...eventKey,
+      ...update
+    }
+    await APIEventKeys.createEventKey(newEventKey)
   }
 
   return (
@@ -33,7 +31,7 @@ const EventKey = ({ eventKey, number }) => {
       <td>{eventKey.group}</td>
       <td>{eventKey.timeToTakeKey}</td>
       <td>
-        {eventKey.isUsed ?
+        {!eventKey.timeToPassKey ?
           <Badge pill bg="success">
             Используется
           </Badge>
@@ -41,16 +39,16 @@ const EventKey = ({ eventKey, number }) => {
           eventKey.timeToPassKey
         }
       </td>
-      {eventKey.isUsed ?
+      {!eventKey.timeToPassKey ?
         <td>
           <Button
             variant="primary"
-            onClick={() => deleteEventKey(eventKey._id, eventKey.aud)}
+            onClick={() => deleteCurrentEK()}
           >
             Удалить
           </Button>
           <Button variant='primary'
-            onClick={() => passEventKey(eventKey._id, eventKey.aud)}
+            onClick={() => passEventKey()}
           >
             Сдать аудиторию</Button>
         </td>

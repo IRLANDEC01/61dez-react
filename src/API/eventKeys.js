@@ -21,22 +21,4 @@ export default class APIEventKeys {
                 console.error(error.message);
             })
     }
-    static async deleteEventKey(id) {
-        instance.post('/deleteEventKey', { id })
-            .then((response) => {
-                console.log(response.data.message);
-            })
-            .catch((error) => {
-                console.error(error.message);
-            })
-    }
-    static async passEventKey(id, update) {
-        instance.post('/passEventKey', { id, update })
-            .then((response) => {
-                console.log(response.data.message);
-            })
-            .catch((error) => {
-                console.error(error.message);
-            })
-    }
 }

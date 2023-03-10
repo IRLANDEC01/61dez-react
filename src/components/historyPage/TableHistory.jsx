@@ -4,8 +4,6 @@ import HistoryEventKey from './HistoryEventKey'
 
 
 const TableHistory = ({ historyEventKeys }) => {
-    console.log(historyEventKeys);
-    console.log('render history');
     return (
         <Row>
             <Col>

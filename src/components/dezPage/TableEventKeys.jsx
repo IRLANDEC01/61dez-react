@@ -1,11 +1,8 @@
 import React, { useContext } from 'react'
 import { Col, Row, Table } from 'react-bootstrap'
-import { EventKeysContext } from '../../context'
 import EventKey from './EventKey'
 
-const TableEventKeys = () => {
-    const { eventKeys } = useContext(EventKeysContext)
-
+const TableEventKeys = ({currentEK,setCurrentEK}) => {
     return (
         <Row>
             <Col>
@@ -22,8 +19,9 @@ const TableEventKeys = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {eventKeys.map((event, index) =>
+                        {currentEK.map((event, index) =>
                             <EventKey
+                            setCurrentEK={setCurrentEK}
                                 key={event._id}
                                 eventKey={event}
                                 number={index + 1}

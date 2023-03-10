@@ -2,30 +2,26 @@ import { Formik } from 'formik'
 import moment from 'moment'
 import React, { useContext, useMemo, useState } from 'react'
 import { Button, Card, Col, Form, Modal, Row } from 'react-bootstrap'
-import APIAuds from '../../API/auds'
-import APIEventKeys from '../../API/eventKeys'
+import APICurrentEK from '../../API/currentEK'
 import { AudsContext, EventKeysContext, GroupsContext } from '../../context'
 
 
-const FormCreateEventKey = ({ showFormCreateModal, setShowFormCreateModal }) => {
+const FormCreateEventKey = ({ showFormCreateModal, setShowFormCreateModal, currentEK, setCurrentEK }) => {
     const { auds, setAuds } = useContext(AudsContext)
     const { groups } = useContext(GroupsContext)
-    const { setEventKeys } = useContext(EventKeysContext)
     const [selectedCourse, setSelectedCourse] = useState(null)
 
     const freeAuds = useMemo(() => {
-        return auds.filter((aud) => !aud.isUsed)
-    }, [auds])
+        return auds.filter((aud) => !eventKey.timeToPassKey)
+    }, [currentEK])
 
     const setGroups = useMemo(() => {
         return groups.filter((group) => group.course === selectedCourse)
-    }, [selectedCourse])
+    }, [selectedCourse, groups])
 
-    const createEventKey = async (eventKey) => {
-        await APIEventKeys.createEventKey(eventKey)
-        await APIAuds.updateStateAud(eventKey.aud)
-        setEventKeys(await APIEventKeys.getEventKeys())
-        setAuds(await APIAuds.getAuds())
+    const createCurrentEK = async (eventKey) => {
+        await APICurrentEK.addCurrentEK(eventKey) 
+        setCurrentEK(await APICurrentEK.getCurrentEK())
         setShowFormCreateModal(false)
     }
 
@@ -78,13 +74,11 @@ const FormCreateEventKey = ({ showFormCreateModal, setShowFormCreateModal }) => 
                                     ...values,
                                     date: moment(Date.now()).format('DD-MM-YYYY'),
                                     aud: Number(values.aud),
-                                    timeToTakeKey: new Date(Date.now()).toLocaleString().split(',')[1],
-                                    timeToPassKey: null,
-                                    isUsed: true
+                                    timeToTakeKey: new Date(Date.now()).toLocaleString().split(', ')[1],
+                                    timeToPassKey: null
                                 }
-                                createEventKey(newEventKey)
+                                createCurrentEK(newEventKey)
                             }}
-
                         >
                             {
                                 ({
@@ -181,7 +175,6 @@ const FormCreateEventKey = ({ showFormCreateModal, setShowFormCreateModal }) => 
                 </Col>
             </Row >
         </div >
-
     )
 }
 export default FormCreateEventKey
