@@ -3,17 +3,17 @@ import DatePicker, { registerLocale } from "react-datepicker";
 import ru from 'date-fns/locale/ru';
 import moment from 'moment/moment';
 import { Col, Row } from 'react-bootstrap';
-import APIHistory from '../../API/history';
+import APIEventKeys from '../../API/eventKeys';
 registerLocale('ru', ru)
 
 const Calendar = ({ setHistoryEventKeys }) => {
     const [startDate, setStartDate] = useState(new Date());
 
-    const getDateEventKeys = async (date) => {
+    const getEventKeys = async (date) => {
+        console.log(moment(date).format('DD-MM-YYYY'));
         setStartDate(date)
         if (startDate < new Date()) {
-            let day = moment(date).format('DD-MM-YYYY')
-            setHistoryEventKeys(await APIHistory.getHistory(day))
+            setHistoryEventKeys(await APIEventKeys.getEventKeys(moment(date).format('DD-MM-YYYY')))
         }
     }
     return (
@@ -21,7 +21,7 @@ const Calendar = ({ setHistoryEventKeys }) => {
             <Col>
                 <DatePicker
                     selected={startDate}
-                    onChange={(date) => getDateEventKeys(date)}
+                    onChange={(date) => getEventKeys(date)}
                     locale="ru"
                     inline
                     dateFormat="yyyy/MM/dd"

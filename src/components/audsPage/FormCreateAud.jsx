@@ -37,7 +37,7 @@ const FormCreateAud = () => {
                                 }
                                 return errors;
                             }}
-                            onSubmit={(values) => { createAud({ ...values, isUsed: false }) }}
+                            onSubmit={(values) => { createAud(values) }}
                         >
                             {
                                 formik => (

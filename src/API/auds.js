@@ -1,5 +1,6 @@
 import instance from ".";
 export default class APIAuds {
+    
     static async getAuds() {
         return await instance.get('/getAuds')
             .then((response) => {
@@ -28,13 +29,5 @@ export default class APIAuds {
                 console.error(error.message);
             })
     }
-    static async updateStateAud(aud) {
-        await instance.post('/updateStateAud', { aud })
-            .then((response) => {
-                console.log(response.data.message);
-            })
-            .catch((error) => {
-                console.error(error.message);
-            })
-    }
+   
 }

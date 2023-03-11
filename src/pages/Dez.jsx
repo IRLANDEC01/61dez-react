@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import APICurrentEK from '../API/currentEK'
 import FormCreateEventKey from '../components/dezPage/FormCreateEventKey'
 import TableEventKeys from '../components/dezPage/TableEventKeys'
@@ -12,9 +12,9 @@ const Dez = () => {
       setCurrentEK(await APICurrentEK.getCurrentEK())
     }
     fetchData();
-   
+
   }, [])
-  
+
   return (
     <div>
       <TableEventKeys

@@ -35,7 +35,7 @@ export const App = () => {
     }
     fetchData();
   }, [])
-  console.log('render');
+  console.log('render APP');
   return (
     <Container fluid>
       <AudsContext.Provider

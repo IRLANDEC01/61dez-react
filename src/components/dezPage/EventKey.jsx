@@ -1,4 +1,5 @@
-import React, { useContext } from 'react'
+import moment from 'moment'
+import React from 'react'
 import { Badge, Button } from 'react-bootstrap'
 import APICurrentEK from '../../API/currentEK'
 import APIEventKeys from '../../API/eventKeys'
@@ -12,7 +13,7 @@ const EventKey = ({ eventKey, number, setCurrentEK }) => {
   const passEventKey = async () => {
     const update = {
       isUsed: false,
-      timeToPassKey: new Date(Date.now()).toLocaleString().split(', ')[1]
+      timeToPassKey: moment(Date.now()).format('HH:mm')
     }
     await APICurrentEK.passCurrentEK(eventKey._id, update)
     setCurrentEK(await APICurrentEK.getCurrentEK())

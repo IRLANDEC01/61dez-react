@@ -3,24 +3,25 @@ import moment from 'moment'
 import React, { useContext, useMemo, useState } from 'react'
 import { Button, Card, Col, Form, Modal, Row } from 'react-bootstrap'
 import APICurrentEK from '../../API/currentEK'
-import { AudsContext, EventKeysContext, GroupsContext } from '../../context'
+import { AudsContext, GroupsContext } from '../../context'
 
 
 const FormCreateEventKey = ({ showFormCreateModal, setShowFormCreateModal, currentEK, setCurrentEK }) => {
-    const { auds, setAuds } = useContext(AudsContext)
+    const { auds } = useContext(AudsContext)
     const { groups } = useContext(GroupsContext)
     const [selectedCourse, setSelectedCourse] = useState(null)
 
     const freeAuds = useMemo(() => {
-        return auds.filter((aud) => !eventKey.timeToPassKey)
-    }, [currentEK])
+        return auds.filter((aud) => !currentEK.find(eventKey => eventKey.aud == aud.name && eventKey.timeToPassKey == null))
+    }, [currentEK, auds])
 
-    const setGroups = useMemo(() => {
-        return groups.filter((group) => group.course === selectedCourse)
-    }, [selectedCourse, groups])
+    const sortGroups = useMemo(() => {
+        return groups.filter((group) => group.course === selectedCourse &&
+                (!currentEK.find(eventKey => eventKey.group == group.name && eventKey.timeToPassKey == null)))
+    }, [selectedCourse, groups, currentEK])
 
     const createCurrentEK = async (eventKey) => {
-        await APICurrentEK.addCurrentEK(eventKey) 
+        await APICurrentEK.addCurrentEK(eventKey)
         setCurrentEK(await APICurrentEK.getCurrentEK())
         setShowFormCreateModal(false)
     }
@@ -74,7 +75,7 @@ const FormCreateEventKey = ({ showFormCreateModal, setShowFormCreateModal, curre
                                     ...values,
                                     date: moment(Date.now()).format('DD-MM-YYYY'),
                                     aud: Number(values.aud),
-                                    timeToTakeKey: new Date(Date.now()).toLocaleString().split(', ')[1],
+                                    timeToTakeKey: moment(Date.now()).format('HH:mm'),
                                     timeToPassKey: null
                                 }
                                 createCurrentEK(newEventKey)
@@ -151,7 +152,7 @@ const FormCreateEventKey = ({ showFormCreateModal, setShowFormCreateModal, curre
                                                             onBlur={handleBlur}
                                                         >
                                                             <option> Не выбрано</option>
-                                                            {setGroups.map(group => <option key={group._id} value={group.name}>{group.name}</option>)}
+                                                            {sortGroups.map(group => <option key={group._id} value={group.name}>{group.name}</option>)}
                                                         </Form.Select>
                                                         <Form.Control.Feedback type="valid">Готово!</Form.Control.Feedback>
                                                         <Form.Control.Feedback type="invalid">
